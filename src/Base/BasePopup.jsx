@@ -1,12 +1,12 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { polyfill } from 'react-lifecycles-compat';
-import Tree from 'rc-tree';
+import React from "react";
+import PropTypes from "prop-types";
+import { polyfill } from "react-lifecycles-compat";
+import Tree from "rc-tree";
 
 export const popupContextTypes = {
   onPopupKeyDown: PropTypes.func.isRequired,
   onTreeNodeSelect: PropTypes.func.isRequired,
-  onTreeNodeCheck: PropTypes.func.isRequired,
+  onTreeNodeCheck: PropTypes.func.isRequired
 };
 
 class BasePopup extends React.Component {
@@ -19,10 +19,7 @@ class BasePopup extends React.Component {
     treeIcon: PropTypes.bool,
     treeLine: PropTypes.bool,
     treeNodeFilterProp: PropTypes.string,
-    treeCheckable: PropTypes.oneOfType([
-      PropTypes.bool,
-      PropTypes.node,
-    ]),
+    treeCheckable: PropTypes.oneOfType([PropTypes.bool, PropTypes.node]),
     treeCheckStrictly: PropTypes.bool,
     treeDefaultExpandAll: PropTypes.bool,
     treeDefaultExpandedKeys: PropTypes.array,
@@ -37,21 +34,22 @@ class BasePopup extends React.Component {
 
     // HOC
     renderSearch: PropTypes.func,
-    onTreeExpanded: PropTypes.func,
+    onTreeExpanded: PropTypes.func
   };
 
   static contextTypes = {
     rcTreeSelect: PropTypes.shape({
-      ...popupContextTypes,
-    }),
+      ...popupContextTypes
+    })
   };
 
   constructor(props) {
     super();
 
     const {
-      treeDefaultExpandAll, treeDefaultExpandedKeys,
-      keyEntities,
+      treeDefaultExpandAll,
+      treeDefaultExpandedKeys,
+      keyEntities
     } = props;
 
     // TODO: make `expandedKeyList` control
@@ -62,16 +60,23 @@ class BasePopup extends React.Component {
 
     this.state = {
       keyList: [],
-      expandedKeyList,
+      expandedKeyList
     };
+
+    console.log("constructing base popup");
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
     const { prevProps = {} } = prevState || {};
-    const { valueList, valueEntities, keyEntities, filteredTreeNodes } = nextProps;
+    const {
+      valueList,
+      valueEntities,
+      keyEntities,
+      filteredTreeNodes
+    } = nextProps;
 
     const newState = {
-      prevProps: nextProps,
+      prevProps: nextProps
     };
 
     // Check value update
@@ -83,14 +88,18 @@ class BasePopup extends React.Component {
     }
 
     // Show all when tree is in filter mode
-    if (filteredTreeNodes && filteredTreeNodes.length && filteredTreeNodes !== prevProps.filteredTreeNodes) {
+    if (
+      filteredTreeNodes &&
+      filteredTreeNodes.length &&
+      filteredTreeNodes !== prevProps.filteredTreeNodes
+    ) {
       newState.expandedKeyList = Object.keys(keyEntities);
     }
 
     return newState;
   }
 
-  onTreeExpand = (expandedKeyList) => {
+  onTreeExpand = expandedKeyList => {
     const { onTreeExpanded } = this.props;
     this.setState({ expandedKeyList }, onTreeExpanded);
   };
@@ -99,12 +108,15 @@ class BasePopup extends React.Component {
    * This method pass to Tree component which is used for add filtered class
    * in TreeNode > li
    */
-  filterTreeNode = (treeNode) => {
+  filterTreeNode = treeNode => {
     const { upperSearchValue, treeNodeFilterProp } = this.props;
 
     const filterVal = treeNode.props[treeNodeFilterProp];
-    if (typeof filterVal === 'string') {
-      return upperSearchValue && (filterVal).toUpperCase().indexOf(upperSearchValue) !== -1;
+    if (typeof filterVal === "string") {
+      return (
+        upperSearchValue &&
+        filterVal.toUpperCase().indexOf(upperSearchValue) !== -1
+      );
     }
 
     return false;
@@ -113,28 +125,27 @@ class BasePopup extends React.Component {
   renderNotFound = () => {
     const { prefixCls, notFoundContent } = this.props;
 
-    return (
-      <span className={`${prefixCls}-not-found`}>
-        {notFoundContent}
-      </span>
-    );
+    return <span className={`${prefixCls}-not-found`}>{notFoundContent}</span>;
   };
 
   render() {
     const { keyList, expandedKeyList } = this.state;
     const {
       prefixCls,
-      treeNodes, filteredTreeNodes,
-      treeIcon, treeLine, treeCheckable, treeCheckStrictly, multiple,
+      treeNodes,
+      filteredTreeNodes,
+      treeIcon,
+      treeLine,
+      treeCheckable,
+      treeCheckStrictly,
+      multiple,
       loadData,
       ariaId,
-      renderSearch,
+      renderSearch
     } = this.props;
-    const { rcTreeSelect: {
-      onPopupKeyDown,
-      onTreeNodeSelect,
-      onTreeNodeCheck,
-    } } = this.context;
+    const {
+      rcTreeSelect: { onPopupKeyDown, onTreeNodeSelect, onTreeNodeCheck }
+    } = this.context;
 
     const treeProps = {};
 
@@ -186,12 +197,7 @@ class BasePopup extends React.Component {
     }
 
     return (
-      <div
-        role="listbox"
-        id={ariaId}
-        onKeyDown={onPopupKeyDown}
-        tabIndex={-1}
-      >
+      <div role="listbox" id={ariaId} onKeyDown={onPopupKeyDown} tabIndex={-1}>
         {renderSearch ? renderSearch() : null}
         {$tree}
       </div>
