@@ -102,7 +102,10 @@ class BasePopup extends React.Component {
   onTreeExpand = expandedKeyList => {
     const { onTreeExpanded, onExpandTreeNode } = this.props;
     this.setState({ expandedKeyList }, onTreeExpanded);
-    onExpandTreeNode(expandedKeyList);
+
+    if (onExpandTreeNode) {
+      onExpandTreeNode(expandedKeyList);
+    }
   };
 
   /**
