@@ -1,21 +1,21 @@
 {
-  "name": "rc-tree-select",
-  "version": "2.0.7",
-  "description": "tree-select ui component for react",
+  "name": "rc-tree-select-async",
+  "version": "0.0.1",
+  "description": "async tree-select ui component for react based on https://github.com/react-component/tree-select",
   "keywords": [
     "react",
     "react-component",
     "react-tree-select",
     "tree-select"
   ],
-  "homepage": "https://github.com/react-component/tree-select",
-  "author": "hualei5280@gmail.com",
+  "homepage": "https://github.com/staxval/tree-select",
+  "author": "hualei5280@gmail.com, staxval@gmail.com",
   "repository": {
     "type": "git",
-    "url": "https://github.com/react-component/tree-select.git"
+    "url": "https://github.com/staxval/tree-select.git"
   },
   "bugs": {
-    "url": "https://github.com/react-component/tree-select/issues"
+    "url": "https://github.com/staxval/tree-select/issues"
   },
   "files": [
     "es",
