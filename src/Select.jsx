@@ -103,6 +103,7 @@ class Select extends React.Component {
     onDeselect: PropTypes.func,
     onChange: PropTypes.func,
     onDropdownVisibleChange: PropTypes.func,
+    onExpandTree: PropTypes.func,
   };
 
   static childContextTypes = {

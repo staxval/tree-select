@@ -32,6 +32,8 @@ class BasePopup extends React.Component {
 
     ariaId: PropTypes.string,
 
+    onExpandTreeNode: PropTypes.func,
+
     // HOC
     renderSearch: PropTypes.func,
     onTreeExpanded: PropTypes.func
@@ -62,8 +64,6 @@ class BasePopup extends React.Component {
       keyList: [],
       expandedKeyList
     };
-
-    console.log("constructing base popup");
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -100,8 +100,9 @@ class BasePopup extends React.Component {
   }
 
   onTreeExpand = expandedKeyList => {
-    const { onTreeExpanded } = this.props;
+    const { onTreeExpanded, onExpandTreeNode } = this.props;
     this.setState({ expandedKeyList }, onTreeExpanded);
+    onExpandTreeNode(expandedKeyList);
   };
 
   /**
