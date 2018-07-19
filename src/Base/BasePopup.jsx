@@ -23,6 +23,7 @@ class BasePopup extends React.Component {
     treeCheckStrictly: PropTypes.bool,
     treeDefaultExpandAll: PropTypes.bool,
     treeDefaultExpandedKeys: PropTypes.array,
+    expandedKeyList: PropTypes.array,
     loadData: PropTypes.func,
     multiple: PropTypes.bool,
 
@@ -51,18 +52,19 @@ class BasePopup extends React.Component {
     const {
       treeDefaultExpandAll,
       treeDefaultExpandedKeys,
-      keyEntities
+      keyEntities,
+      expandedKeyList
     } = props;
 
     // TODO: make `expandedKeyList` control
-    let expandedKeyList = treeDefaultExpandedKeys;
+    let defaultExpandedKeyList = treeDefaultExpandedKeys || expandedKeyList;
     if (treeDefaultExpandAll) {
-      expandedKeyList = Object.keys(keyEntities);
+      defaultExpandedKeyList = Object.keys(keyEntities);
     }
 
     this.state = {
       keyList: [],
-      expandedKeyList
+      expandedKeyList: defaultExpandedKeyList
     };
   }
 
@@ -72,7 +74,8 @@ class BasePopup extends React.Component {
       valueList,
       valueEntities,
       keyEntities,
-      filteredTreeNodes
+      filteredTreeNodes,
+      expandedKeyList
     } = nextProps;
 
     const newState = {
@@ -94,6 +97,8 @@ class BasePopup extends React.Component {
       filteredTreeNodes !== prevProps.filteredTreeNodes
     ) {
       newState.expandedKeyList = Object.keys(keyEntities);
+    } else {
+      newState.expandedKeyList = expandedKeyList;
     }
 
     return newState;
