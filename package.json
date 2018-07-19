@@ -1,6 +1,6 @@
 {
   "name": "rc-tree-select-async",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "async tree-select ui component for react based on https://github.com/react-component/tree-select",
   "keywords": [
     "react",
