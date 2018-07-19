@@ -82,8 +82,6 @@ class BasePopup extends React.Component {
       prevProps: nextProps
     };
 
-    console.log('updating BasePopup state');
-
     // Check value update
     if (valueList !== prevProps.valueList) {
       newState.keyList = valueList
@@ -98,10 +96,8 @@ class BasePopup extends React.Component {
       filteredTreeNodes.length &&
       filteredTreeNodes !== prevProps.filteredTreeNodes
     ) {
-      console.log('expand all');
       newState.expandedKeyList = Object.keys(keyEntities);
-    } else {
-      console.log('upd expand list');
+    } else if (filteredTreeNodes === null) {
       newState.expandedKeyList = expandedKeyList;
     }
 

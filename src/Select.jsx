@@ -187,7 +187,7 @@ class Select extends React.Component {
     const {
       treeCheckable, treeCheckStrictly,
       filterTreeNode, treeNodeFilterProp,
-      treeDataSimpleMode,
+      treeDataSimpleMode, enableAsyncSearch
     } = nextProps;
     const newState = {
       prevProps: nextProps,
@@ -353,11 +353,19 @@ class Select extends React.Component {
         };
       }
 
-      newState.filteredTreeNodes = getFilterTree(
-        newState.treeNodes || prevState.treeNodes,
-        newState.searchValue,
-        filterTreeNodeFn,
-      );
+      if (enableAsyncSearch && newState.searchValue) {
+        newState.filteredTreeNodes = getFilterTree(
+          newState.treeNodes,
+          newState.searchValue,
+          filterTreeNodeFn,
+        );
+      } else {
+        newState.filteredTreeNodes = getFilterTree(
+          newState.treeNodes || prevState.treeNodes,
+          newState.searchValue,
+          filterTreeNodeFn,
+        );
+      }
     }
 
     // Checked Strategy
