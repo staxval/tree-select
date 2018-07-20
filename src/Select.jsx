@@ -338,7 +338,9 @@ class Select extends React.Component {
     });
 
     // Do the search logic
-    if (newState.searchValue !== undefined) {
+    if (newState.searchValue !== undefined ||
+        (prevProps.treeDataSearchResults !== nextProps.treeDataSearchResults)
+    ) {
       const upperSearchValue = String(newState.searchValue).toUpperCase();
 
       let filterTreeNodeFn = filterTreeNode;
@@ -353,12 +355,16 @@ class Select extends React.Component {
         };
       }
 
-      if (enableAsyncSearch && newState.searchValue) {
-        newState.filteredTreeNodes = getFilterTree(
-          newState.treeNodes,
-          newState.searchValue,
-          filterTreeNodeFn,
+      if (enableAsyncSearch && nextProps.searchValue) {
+        const { treeNodes: treeNodesSearchResults } = convertDataToEntities(
+          nextProps.treeDataSearchResults
         );
+        newState.treeNodes = treeNodesSearchResults;
+      } else if (enableAsyncSearch && !nextProps.searchValue) {
+        const { treeNodes } = convertDataToEntities(
+          nextProps.treeData
+        );
+        newState.treeNodes = treeNodes; 
       } else {
         newState.filteredTreeNodes = getFilterTree(
           newState.treeNodes || prevState.treeNodes,
