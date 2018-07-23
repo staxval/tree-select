@@ -97,7 +97,7 @@ class BasePopup extends React.Component {
       filteredTreeNodes !== prevProps.filteredTreeNodes
     ) {
       newState.expandedKeyList = Object.keys(keyEntities);
-    } else if (filteredTreeNodes === null || expandedKeyList.length > 0) {
+    } else if (filteredTreeNodes === null || expandedKeyList) {
       newState.expandedKeyList = expandedKeyList;
     }
 
