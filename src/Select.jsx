@@ -271,7 +271,7 @@ class Select extends React.Component {
     });
 
     // Selector Value List
-    if (valueRefresh) {
+    if (valueRefresh && newState.treeNodes.length) {
       // Find out that value not exist in the tree
       const missValueList = [];
       const filteredValueList = [];
